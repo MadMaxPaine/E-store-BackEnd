@@ -1,0 +1,9 @@
+#Node_modules
+node_modules
+
+#.env
+*.env
+
+#static_folder
+static/*.jpg
+static/*.png
