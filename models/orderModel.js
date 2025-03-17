@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize  = require("../db");
+const sequelize = require("../db");
 const User = require("./userModel"); // Імпорт моделі User
 
 const Order = sequelize.define("order", {
@@ -8,10 +8,11 @@ const Order = sequelize.define("order", {
     type: DataTypes.INTEGER, 
     allowNull: false, 
     references: { 
-      model: User, // Використання моделі User
+      model: User,
       key: "id" 
     },
-    onDelete: "CASCADE", // Якщо користувача видалено, видаляємо його замовлення
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
   },
   status: {
     type: DataTypes.STRING,
@@ -37,11 +38,11 @@ const Order = sequelize.define("order", {
     },
   },
   shippingAddress: {
-    type: DataTypes.JSON, // Використання JSON замість JSONB для MySQL
+    type: DataTypes.JSONB, // Використовуємо JSONB для PostgreSQL
     allowNull: false,
   },
 }, {
-  timestamps: true, // Sequelize автоматично додасть createdAt та updatedAt
+  timestamps: true,
 });
 
 module.exports = Order;

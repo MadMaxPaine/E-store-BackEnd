@@ -26,45 +26,45 @@ Basket.belongsTo(User);
 User.hasMany(Rating, { onDelete: "CASCADE" });
 Rating.belongsTo(User);
 
-//basket
+// 📌 Один кошик → багато пристроїв через BasketDevice
 Basket.hasMany(BasketDevice, { onDelete: "CASCADE" });
 BasketDevice.belongsTo(Basket);
 
-//type
+// 📌 Один пристрій → один тип
 Type.hasMany(Device);
 Device.belongsTo(Type);
 
-//brand
+// 📌 Один бренд → багато пристроїв
 Brand.hasMany(Device);
 Device.belongsTo(Brand);
 
-//basket_device
+// 📌 Пристрій → багато BasketDevice
 Device.hasMany(BasketDevice, { onDelete: "CASCADE" });
 BasketDevice.belongsTo(Device);
 
-//device_info
+// 📌 Пристрій має багато DeviceInfo
 Device.hasMany(DeviceInfo, { as: "info" });
 DeviceInfo.belongsTo(Device);
 
-//To many
+// 📌 Між Type та Brand є зв'язок many-to-many
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });
 
-//Comment
+// 📌 Коментарі
 User.hasMany(Comment);
 Comment.belongsTo(User);
 Device.hasMany(Comment);
 Comment.belongsTo(Device);
 
-//user_info
+// 📌 Кожен користувач має одну інформацію про користувача
 User.hasOne(UserInfo);
 UserInfo.belongsTo(User);
 
-//Token
+// 📌 Користувач має багато токенів
 User.hasMany(Token);
 Token.belongsTo(User);
 
-// 📌 Зв’язок між користувачем і замовленням
+// 📌 Користувач має багато замовлень
 User.hasMany(Order, { onDelete: "CASCADE" });
 Order.belongsTo(User);
 
@@ -72,16 +72,9 @@ Order.belongsTo(User);
 Basket.belongsTo(Order, { foreignKey: 'orderId', onDelete: "SET NULL" });
 Order.hasOne(Basket, { foreignKey: 'orderId' });
 
-// 📌 Пристрої можуть бути в багатьох замовленнях через BasketDevice
+// 📌 Кошик може містити багато пристроїв через BasketDevice
 Order.belongsToMany(Device, { through: BasketDevice });
 Device.belongsToMany(Order, { through: BasketDevice });
-
-// 📌 Кошик може містити багато пристроїв через BasketDevice
-Basket.hasMany(BasketDevice, { onDelete: "CASCADE" });
-BasketDevice.belongsTo(Basket);
-
-Device.hasMany(BasketDevice, { onDelete: "CASCADE" });
-BasketDevice.belongsTo(Device);
 
 module.exports = {
   User,

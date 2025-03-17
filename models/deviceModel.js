@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequlize = require('../db');
+const sequelize = require('../db');
 
-const Device = sequlize.define('device', {
+const Device = sequelize.define('device', {
  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
  name: { type: DataTypes.STRING, unique: true, allowNull: false },
  price: { type: DataTypes.INTEGER, allowNull: false },

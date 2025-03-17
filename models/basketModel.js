@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
+const User = require('./userModel'); 
+const Order = require('./orderModel'); 
 
 const Basket = sequelize.define('basket', {
   id: { 
@@ -14,19 +16,23 @@ const Basket = sequelize.define('basket', {
   },
   userId: { 
     type: DataTypes.INTEGER,
+    allowNull: false,
     references: {
-      model: 'users',
+      model: User, // Використовуємо модель замість назви таблиці
       key: 'id',
     },
-    allowNull: false,
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
   },
   orderId: { 
     type: DataTypes.INTEGER,
+    allowNull: true,
     references: {
-      model: 'orders',
+      model: Order, // Використовуємо модель замість назви таблиці
       key: 'id',
     },
-    allowNull: true,
+    onDelete: "SET NULL", // Якщо видалити замовлення, то orderId буде NULL
+    onUpdate: "CASCADE",
   }
 }, {
   timestamps: true,
